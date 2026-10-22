@@ -30,12 +30,12 @@ docker build -t nom-du-projet .
 
 ### 4. Lancer le conteneur
 ```
-docker run --name test-container -p 8000:8000 test
+docker run --name nom-du-container -p 8000:8000 nom-du-projet
 ```
-Changer `8000:8000` en `8001:8000`, `8002:8000`,... si besoin.
-`docker ps` permet de voir quels conteneurs sont actifs.
+Changer `8000:8000` en `8001:8000`, `8002:8000`,... si besoin.  
+`docker ps` permet de voir quels conteneurs sont actifs.  
 `docker stop NOM_DU_CONTENEUR` arrête un conteneur.
 
 ### 5. Ouvrir l'interface web
-http://localhost:8000
+http://localhost:8000  
 http://localhost:8000/docs
