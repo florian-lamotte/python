@@ -1,11 +1,14 @@
 from fastapi import FastAPI
+from app.routers import items
 
-app = FastAPI()
+app = FastAPI(
+    title="API",
+    description="Prototype d'API",
+    version="0.1.0",
+)
 
-@app.get("/")
+@app.get("/", tags=["Divers"])
 def read_root():
     return {"Hello": "World"}
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: str | None = None):
-    return {"item_id": item_id, "q": q}
+app.include_router(items.router)
