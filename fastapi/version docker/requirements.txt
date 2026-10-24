@@ -1,8 +1,8 @@
 fastapi
 uvicorn[standard]
 pydantic-settings
-sqlalchemy
-alembic
 pytest
 httpx
+sqlalchemy
+alembic
 ruff
