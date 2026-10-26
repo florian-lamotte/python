@@ -1,14 +1,17 @@
 from fastapi import FastAPI, Request
 from app.routers import items
 from app.logging_config import get_logger
+from app.core.config import get_settings
 import time
 
+settings = get_settings()
 logger = get_logger(__name__)
 
 app = FastAPI(
-    title="API",
-    description="Prototype d'API",
-    version="0.1.0",
+    title=settings.app_name,
+    description=settings.app_description,
+    version=settings.app_version,
+    debug=settings.debug,
 )
 
 @app.middleware("http")
