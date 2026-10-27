@@ -73,4 +73,8 @@ async def log_requests(request: Request, call_next):
 def read_root():
     return {"message": "Bonjour"}
 
+@app.get("/health", tags=["Monitoring"])
+def health():
+    return {"status": "ok"}
+
 app.include_router(items.router)
