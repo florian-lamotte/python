@@ -1,8 +1,10 @@
+import time
+
 from fastapi import FastAPI, Request
+
 from app.routers import items
 from app.logging_config import get_logger
 from app.core.config import get_settings
-import time
 
 settings = get_settings()
 logger = get_logger(__name__)
@@ -20,44 +22,9 @@ async def log_requests(request: Request, call_next):
 
     method = request.method
     path = request.url.path
-
+    
     try:
         response = await call_next(request)
-        duration = time.perf_counter() - start_time
-
-        status_code = response.status_code
-
-        message = (
-            "%s %s - status=%s - duration=%.3fs"
-        )
-
-        if status_code >= 500:
-            logger.error(
-                message,
-                method,
-                path,
-                status_code,
-                duration,
-            )
-        elif status_code >= 400:
-            logger.warning(
-                message,
-                method,
-                path,
-                status_code,
-                duration,
-            )
-        else:
-            logger.info(
-                message,
-                method,
-                path,
-                status_code,
-                duration,
-            )
-
-        return response
-
     except Exception:
         duration = time.perf_counter() - start_time
 
@@ -69,12 +36,31 @@ async def log_requests(request: Request, call_next):
         )
         raise
 
+    duration = time.perf_counter() - start_time
+    status_code = response.status_code
+    message = "%s %s - status=%s - duration=%.3fs"
+
+    if status_code >= 500:
+        logger.error(
+            message, method, path, status_code, duration
+        )
+    elif status_code >= 400:
+        logger.warning(
+            message, method, path, status_code, duration
+        )
+    else:
+        logger.info(
+            message, method, path, status_code, duration
+        )
+
+    return response
+
 @app.get("/", tags=["Divers"])
-def read_root():
+async def read_root():
     return {"message": "Bonjour"}
 
 @app.get("/health", tags=["Monitoring"])
-def health():
+async def health():
     return {"status": "ok"}
 
 app.include_router(items.router)
