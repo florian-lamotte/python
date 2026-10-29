@@ -3,10 +3,16 @@ from logging.handlers import RotatingFileHandler
 from pathlib import Path
 
 from app.core.config import get_settings
+from app.core.request_context import request_id_ctx
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 LOG_DIR = BASE_DIR / "logs"
 LOG_FILE = LOG_DIR / "app.log"
+
+class RequestIdFilter(logging.Filter):
+    def filter(self, record: logging.LogRecord) -> bool:
+        record.request_id = request_id_ctx.get()
+        return True
 
 _configured = False
 
@@ -28,16 +34,20 @@ def setup_logging() -> None:
     file_handler = RotatingFileHandler(
         LOG_FILE,
         maxBytes=5 * 1024 * 1024,
-        backupCount=3,
+        backupCount=10,
         encoding="utf-8",
     )
     file_handler.setLevel(level)
+    file_handler.addFilter(RequestIdFilter())
 
     formatter = logging.Formatter(
-        "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        "%(asctime)s - %(levelname)s "
+        "- request_id=%(request_id)s "
+        "- %(name)s - %(message)s",
         datefmt="%Y-%m-%d %H:%M:%S",
     )
     file_handler.setFormatter(formatter)
+    logger.addHandler(file_handler)
 
     logger.addHandler(file_handler)
     _configured = True
