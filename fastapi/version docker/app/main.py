@@ -4,9 +4,12 @@ import uuid
 from fastapi import FastAPI, Request
 
 from app.routers import items
-from app.logging_config import get_logger, setup_logging
+from app.core.logging_config import get_logger, setup_logging
 from app.core.config import get_settings
 from app.core.request_context import request_id_ctx
+from app.core.lifespan import lifespan
+from app.core.exception_handlers import app_exception_handler
+from app.core.exceptions import AppException
 
 settings = get_settings()
 
@@ -18,6 +21,12 @@ app = FastAPI(
     description=settings.app_description,
     version=settings.app_version,
     debug=settings.debug,
+    lifespan=lifespan,
+)
+
+app.add_exception_handler(
+    AppException,
+    app_exception_handler,
 )
 
 @app.middleware("http")
@@ -70,10 +79,15 @@ async def log_requests(request: Request, call_next):
 
 @app.get("/", tags=["Divers"])
 async def read_root():
+    
     return {"message": "Bonjour"}
 
 @app.get("/health", tags=["Monitoring"])
 async def health():
     return {"status": "ok"}
+
+@app.get("/ready")
+async def readiness():
+    return {"status": "ready"}
 
 app.include_router(items.router)
