@@ -5,7 +5,7 @@ from pathlib import Path
 from app.core.config import get_settings
 from app.core.request_context import request_id_ctx
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 LOG_DIR = BASE_DIR / "logs"
 LOG_FILE = LOG_DIR / "app.log"
 
