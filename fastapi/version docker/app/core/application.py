@@ -13,7 +13,7 @@ def create_app() -> FastAPI:
     settings = get_settings()
 
     # Logging
-    setup_logging() 
+    setup_logging(log_level=settings.log_level)
     logger = get_logger(__name__)
 
     logger.info("Creating application")
