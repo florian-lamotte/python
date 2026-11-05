@@ -1,5 +1,5 @@
 import logging
-from logging.handlers import RotatingFileHandler
+from logging.handlers import TimedRotatingFileHandler
 from pathlib import Path
 from threading import Lock
 
@@ -37,10 +37,11 @@ def setup_logging(log_level: LogLevel) -> None:
         logger.setLevel(level)
         logger.propagate = False
         
-        file_handler = RotatingFileHandler(
+        file_handler = TimedRotatingFileHandler(
             LOG_FILE,
-            maxBytes=5 * 1024 * 1024, # 5mo par fichier
-            backupCount=10, # conserve les 10 derniers fichiers
+            when="midnight", # utilise l'heure locale de la machine
+            interval=1,
+            backupCount=0, # nombre de fichiers max conservés
             encoding="utf-8",
         )
         file_handler.setLevel(level)
