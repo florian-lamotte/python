@@ -4,4 +4,4 @@ class ItemResponse(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     item_id: int
-    q: str | None = None
+    name: str | None = None

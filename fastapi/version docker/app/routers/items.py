@@ -1,9 +1,8 @@
 from typing import Annotated
-from fastapi import APIRouter, Depends, Path, Query
+from fastapi import APIRouter, Query
 
 from app.schemas.item import ItemResponse
-from app.services.item_service import ItemService
-from app.core.dependencies.item_dependencies import get_item_service
+from app.core.types.item import ItemId, ItemServiceDep, ItemName
 
 router = APIRouter(prefix="/items", tags=["Items"])
 
@@ -14,8 +13,11 @@ router = APIRouter(prefix="/items", tags=["Items"])
     description="Retourne un item à partir de son identifiant obligatoire.",
 )
 async def read_item(
-    item_id: Annotated[int, Path(gt=0)], 
-    name: Annotated[str | None, Query(max_length=100)] = None,
-    item_service: Annotated[ItemService, Depends(get_item_service)] = None,
+    item_id: ItemId,
+    item_service: ItemServiceDep,
+    name: Annotated[
+        str | None,
+        Query(max_length=100, description="Paramètre optionnel",),
+    ] = None,
 ) -> ItemResponse:
     return item_service.get_item(item_id, name)
