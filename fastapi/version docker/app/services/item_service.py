@@ -4,9 +4,9 @@ class ItemService:
     def get_item(
         self,
         item_id: int, 
-        name: str | None = None,
+        item_name: str | None = None,
     ) -> ItemResponse:
-        return ItemResponse(item_id=item_id, name=name)
+        return ItemResponse(item_id=item_id, item_name=item_name)
     
     #def create_item(self, item_data):
 

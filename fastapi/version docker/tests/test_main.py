@@ -12,12 +12,12 @@ def test_read_root():
     }
 
 def test_read_item():
-    response = client.get("/items/42?q=test")
+    response = client.get("/items/42?name_item=test")
 
     assert response.status_code == 200
     assert response.json() == {
         "item_id": 42,
-        "q": "test",
+        "name_item": "test",
     }
 
 def test_invalid_item_id():

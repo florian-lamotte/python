@@ -13,12 +13,32 @@ __pycache__/
 .mypy_cache/
 .ruff_cache/
 .coverage
+.coverage.*
 htmlcov/
+coverage.xml
+.tox/
+.nox/
+.hypothesis/
+.pytype/
+.pyre/
+.dmypy.json
+
+# Packaging Python
+build/
+dist/
+*.egg-info/
+.eggs/
+wheels/
+pip-wheel-metadata/
 
 # Configuration locale et secrets
 .env
 .env.*
 !.env.example
+
+# Logs
+logs/
+*.log
 
 # IDE
 .vscode/
@@ -27,3 +47,10 @@ htmlcov/
 # Système d'exploitation
 Thumbs.db
 .DS_Store
+
+# Fichiers temporaires
+*.tmp
+*.bak
+*.swp
+*.swo
+*~
