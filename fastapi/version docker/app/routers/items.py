@@ -2,7 +2,7 @@ from typing import Annotated
 from fastapi import APIRouter, Query
 
 from app.schemas.item import ItemResponse
-from app.core.types.item import ItemId, ItemServiceDep
+from app.types.item import ItemId, ItemServiceDep
 
 router = APIRouter(prefix="/items", tags=["Items"])
 

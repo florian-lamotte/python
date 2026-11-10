@@ -3,8 +3,8 @@ from fastapi import FastAPI
 from app.core.config import get_settings
 from app.core.lifespan import lifespan
 from app.core.logging_config import setup_logging, get_logger
-from app.core.exceptions import AppException
-from app.core.exception_handlers import app_exception_handler
+from app.core.exceptions.exceptions import AppException
+from app.core.exceptions.exception_handlers import app_exception_handler
 from app.core.middleware.register import register_middlewares
 from app.api.register import register_routers
 

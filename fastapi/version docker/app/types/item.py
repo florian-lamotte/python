@@ -2,7 +2,7 @@ from typing import Annotated
 from fastapi import Depends, Path
 
 from app.services.item_service import ItemService
-from app.core.dependencies.item_dependencies import get_item_service
+from app.dependencies.item_dependencies import get_item_service
 
 ItemId = Annotated[
     int, Path(
