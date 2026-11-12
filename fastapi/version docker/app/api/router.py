@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+
 from app.routers import general, health, items
 
 api_router = APIRouter(prefix="/api/v1")
