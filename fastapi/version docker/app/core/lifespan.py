@@ -1,5 +1,6 @@
 from contextlib import asynccontextmanager
 from collections.abc import AsyncGenerator
+
 from fastapi import FastAPI
 
 from app.core.logging_config import get_logger

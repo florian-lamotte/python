@@ -21,7 +21,7 @@ class Settings(BaseSettings):
     log_level: LogLevel = "INFO"
     
     # Database
-    database_url: str
+    database_url: str | None = None # à rendre obligatoire seulement si la base est indispensable
 
     # attribut spécial de configuration de la classe Pydantic
     model_config = SettingsConfigDict(

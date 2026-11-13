@@ -6,7 +6,7 @@ from starlette.middleware.base import RequestResponseEndpoint
 from starlette.responses import Response
 
 from app.core.logging_config import get_logger
-from app.core.request_context import request_id_ctx
+from app.core.request_context import request_id_var
 
 logger = get_logger(__name__)
 
@@ -15,7 +15,7 @@ async def log_requests(
     call_next: RequestResponseEndpoint,
 ) -> Response:
     request_id = str(uuid.uuid4()) # Génération d'un UUID unique pour chaque requête
-    token = request_id_ctx.set(request_id) # Place l'identifiant dans le ContextVar
+    token = request_id_var.set(request_id) # Place l'identifiant dans le ContextVar
     
     start_time = time.perf_counter()
     
@@ -58,4 +58,4 @@ async def log_requests(
         raise
     finally:
         # Réinitialiste le ContextVar
-        request_id_ctx.reset(token)
+        request_id_var.reset(token)

@@ -4,7 +4,7 @@ from pathlib import Path
 from threading import Lock
 
 from app.core.config import LogLevel
-from app.core.request_context import request_id_ctx
+from app.core.request_context import request_id_var
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 LOG_DIR = BASE_DIR / "logs"
@@ -14,7 +14,7 @@ class RequestIdFilter(logging.Filter):
     """ Ajoute l'id de la requête dans les logs """
     
     def filter(self, record: logging.LogRecord) -> bool:
-        record.request_id = request_id_ctx.get()
+        record.request_id = request_id_var.get()
         return True
 
 _configured = False

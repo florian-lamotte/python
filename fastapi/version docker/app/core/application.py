@@ -1,11 +1,8 @@
 from fastapi import FastAPI
 
-from app.core import (
-    get_settings,
-    lifespan,
-    setup_logging,
-    get_logger
-)
+from app.core.config import get_settings
+from app.core.lifespan import lifespan
+from app.core.logging_config import setup_logging, get_logger
 
 from app.core.exceptions import AppException, app_exception_handler
 
@@ -14,6 +11,8 @@ from app.core.middleware import register_middlewares
 from app.api import register_routers
 
 def create_app() -> FastAPI:
+    ''' Création et configuration de l'application FastAPI '''
+    
     # Configuration
     settings = get_settings()
 
