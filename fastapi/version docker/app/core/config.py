@@ -1,5 +1,6 @@
 from functools import lru_cache
 from typing import Literal
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 LogLevel = Literal[
@@ -11,6 +12,8 @@ LogLevel = Literal[
 ]
 
 class Settings(BaseSettings):
+    """Application settings."""
+    
     # Application
     app_name: str = "API"
     app_description: str = "Prototype d'API"
@@ -34,4 +37,5 @@ class Settings(BaseSettings):
 # décorateur qui met en cache l'objet Settings pour éviter de le recréer à chaque appel de get_settings()
 @lru_cache
 def get_settings() -> Settings:
+    """Return cached application settings."""
     return Settings()

@@ -10,9 +10,9 @@ router = APIRouter(prefix="/items", tags=["Items"])
     "/{item_id}", 
     response_model=ItemResponse,
     summary="Retourne un item",
-    description="Retourne un item à partir de son identifiant obligatoire.",
+    description="Retourne un item à partir de son identifiant.",
 )
-async def read_item(
+def read_item(
     item_id: ItemId,
     item_service: ItemServiceDep,
     item_name: Annotated[

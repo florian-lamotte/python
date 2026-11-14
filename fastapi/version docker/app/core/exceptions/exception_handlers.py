@@ -7,6 +7,8 @@ async def app_exception_handler(
     request: Request,
     exc: AppException,
 ) -> JSONResponse:
+    """ Handle application exceptions. """
+    
     request_id = getattr(
         request.state,
         "request_id",

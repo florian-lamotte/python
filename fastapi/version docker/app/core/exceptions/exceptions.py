@@ -1,6 +1,6 @@
 class AppException(Exception):
-    """ Personnalisation des erreurs """
-    
+    """ Classe de personnalisation des erreurs """
+
     def __init__(
         self,
         message: str = "An application error occurred",
@@ -8,19 +8,20 @@ class AppException(Exception):
     ) -> None:
         self.message = message
         self.status_code = status_code
+        
         super().__init__(message)
 
 class NotFoundException(AppException):
     def __init__(
         self, 
-        message="Resource not found"
+        message: str = "Resource not found"
     ) -> None:
         super().__init__(message, 404)
 
 class ValidationException(AppException):
     def __init__(
         self, 
-        message="Invalid data"
+        message: str = "Invalid data"
     ) -> None:
         super().__init__(message, 400)
 

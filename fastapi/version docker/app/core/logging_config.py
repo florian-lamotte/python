@@ -37,16 +37,6 @@ def setup_logging(log_level: LogLevel) -> None:
         logger.setLevel(level)
         logger.propagate = False
         
-        file_handler = TimedRotatingFileHandler(
-            LOG_FILE,
-            when="midnight", # utilise l'heure locale de la machine
-            interval=1,
-            backupCount=0, # nombre de fichiers max conservés
-            encoding="utf-8",
-        )
-        file_handler.setLevel(level)
-        file_handler.addFilter(RequestIdFilter())
-
         formatter = logging.Formatter(
             "%(asctime)s - %(levelname)s "
             "- request_id=%(request_id)s "
@@ -54,6 +44,17 @@ def setup_logging(log_level: LogLevel) -> None:
             datefmt="%Y-%m-%d %H:%M:%S",
         )
         
+        file_handler = TimedRotatingFileHandler(
+            LOG_FILE,
+            when="midnight", # utilise l'heure locale de la machine
+            interval=1,
+            backupCount=0, # nombre de fichiers max conservés
+            encoding="utf-8",
+            utc=True,
+        )
+        
+        file_handler.setLevel(level)
+        file_handler.addFilter(RequestIdFilter())
         file_handler.setFormatter(formatter)
         
         logger.addHandler(file_handler)
