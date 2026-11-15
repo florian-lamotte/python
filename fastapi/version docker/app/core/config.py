@@ -1,6 +1,7 @@
 from functools import lru_cache
 from typing import Literal
 
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 LogLevel = Literal[
@@ -15,7 +16,7 @@ class Settings(BaseSettings):
     """Application settings."""
     
     # Application
-    app_name: str = "API"
+    app_name: str = Field(min_length=1)
     app_description: str = "Prototype d'API"
     app_version: str = "0.1.0"
     debug: bool = False
