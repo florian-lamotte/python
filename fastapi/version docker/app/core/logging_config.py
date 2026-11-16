@@ -21,7 +21,7 @@ _configured = False
 _config_lock = Lock()
 
 def setup_logging(log_level: LogLevel) -> None:
-    """ Configuration des logs """
+    """ Configure le logging une seule fois par processus. Les appels suivants sont ignorés. """
     
     global _configured
 
@@ -33,9 +33,10 @@ def setup_logging(log_level: LogLevel) -> None:
 
         LOG_DIR.mkdir(parents=True, exist_ok=True)
         
-        logger = logging.getLogger("app")
+        #logger = logging.getLogger("app")
+        logger = logging.getLogger()
         logger.setLevel(level)
-        logger.propagate = False
+        #logger.propagate = False
         
         formatter = logging.Formatter(
             "%(asctime)s - %(levelname)s "
