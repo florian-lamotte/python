@@ -6,3 +6,4 @@ httpx
 sqlalchemy
 alembic
 ruff
+python-json-logger
