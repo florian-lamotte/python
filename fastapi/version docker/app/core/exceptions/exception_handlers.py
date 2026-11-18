@@ -15,7 +15,7 @@ async def app_exception_handler(
         None,
     )
     
-    headers = {}
+    headers: dict[str, str] = {}
 
     if request_id:
         headers["X-Request-ID"] = request_id
