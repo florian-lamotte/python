@@ -1,4 +1,5 @@
 from http import HTTPStatus
+from typing import Mapping
 
 class AppException(Exception):
     """ Classe de base des erreurs """
@@ -7,9 +8,11 @@ class AppException(Exception):
         self,
         message: str = "An application error occurred",
         status_code: HTTPStatus = HTTPStatus.INTERNAL_SERVER_ERROR,
+        headers: Mapping[str, str] | None = None,
     ) -> None:
         self.message = message
         self.status_code = status_code
+        self.headers = dict(headers) if headers else {}
         
         super().__init__(message)
 
@@ -17,9 +20,18 @@ class BadRequestException(AppException):
     def __init__(self, message: str = "Invalid data") -> None:
         super().__init__(message, HTTPStatus.BAD_REQUEST)
 
+# raise UnauthorizedException(headers={"WWW-Authenticate": "Bearer"})
 class UnauthorizedException(AppException):
-    def __init__(self, message: str = "Authentication required") -> None:
-        super().__init__(message, HTTPStatus.UNAUTHORIZED)
+    def __init__(
+        self, 
+        message: str = "Authentication required",
+        headers: Mapping[str, str] | None = None,
+    ) -> None:
+        super().__init__(
+            message, 
+            HTTPStatus.UNAUTHORIZED,
+            headers=headers,
+        )
 
 class ForbiddenException(AppException):
     def __init__(self, message: str = "Access forbidden") -> None:

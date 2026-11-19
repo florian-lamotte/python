@@ -9,13 +9,9 @@ async def app_exception_handler(
 ) -> JSONResponse:
     """ Handle application exceptions. """
     
-    request_id = getattr(
-        request.state,
-        "request_id",
-        None,
-    )
+    request_id = getattr(request.state, "request_id", None,)
     
-    headers: dict[str, str] = {}
+    headers = dict(exc.headers)
 
     if request_id:
         headers["X-Request-ID"] = request_id
