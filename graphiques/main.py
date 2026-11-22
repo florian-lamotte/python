@@ -25,8 +25,8 @@ fenetre = Toplevel(root)
 fenetre.title("Choix des colonnes")
 fenetre.geometry("350x300")
 
-# ----- colonnes x -----
-Label(fenetre, text="Colonnes pour l'axe X (horizontal) :").pack(pady=5)
+# ----- colonne x -----
+Label(fenetre, text="Colonne pour l'axe X (horizontal) :").pack(pady=5)
 
 choix_x = ttk.Combobox(
     fenetre,
