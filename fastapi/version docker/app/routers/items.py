@@ -1,14 +1,20 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Query, Depends
+from sqlalchemy.orm import Session
 
 from app.schemas.item import ItemResponse
 from app.types.item import ItemId, ItemServiceDep
+from app.core.database.database import get_db
 
 router = APIRouter(
     prefix="/items", 
     tags=["Items"]
 )
+
+@router.get("/test-db")
+def test_db(db: Session = Depends(get_db)):
+    return {"message": "Connexion à PostgreSQL configurée"}
 
 @router.get(
     "/{item_id}", 
